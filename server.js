@@ -1,5 +1,5 @@
 const express = require("express"); 
-
+const fs = require("fs")
 const app = express(); 
 const PORT = 3002;  
 
@@ -7,20 +7,25 @@ const PORT = 3002;
 app.use(express.static('public'))
 
 app.use(express.json()) // for parsing application 
-app.use(express.urlencoded({extended:true})) 
+app.use(express.urlencoded({extended:true}))  
+
+const fileName ='db/db.json'
 
 let noteList = [ 
     {title:"first note placeholder text", text:"first note text", id:1000}
 ] //  to save notes to db
 function saveNotes(){ 
-    false.writeFileSync( fileName, Json.stringify( noteList))
+    fs.writeFileSync( fileName, JSON.stringify( noteList))
+
+} 
+// to load notes 
+function loadNotes(){ 
+    const loadNotes = fs.readFileSync (fileName,'utf8' ) 
+    return loadNotes 
 
 } 
 
-function loadNotes(){ 
-    const loadNotes = fs.readFileSync (fileName, )
-
-}
+// let noteList = loadNotes()
 
 // API routes  
 
@@ -36,7 +41,9 @@ app.post( '/api/notes/', function( req, res ){
     newNote.id= Date.now()
     console.log( `[POST/api/notes]`, newNote)  
     // to save note 
-    noteList.push (newNote)
+    noteList.push (newNote) 
+
+    saveNotes()
 
     res.send( newNote )
 }) 
@@ -46,7 +53,9 @@ app.post( '/api/notes/', function( req, res ){
 app.delete( '/api/notes/:id', function( req, res ){ 
     const noteId = req.params.id
 // to delete a note with filter * 
-    noteList=noteList.filter( note=>note.id != noteId) 
+    noteList=noteList.filter( note=>note.id != noteId)  
+
+    saveNotes()
 
 
     console.log( `[DELETE/api/notes]`, noteList) 
