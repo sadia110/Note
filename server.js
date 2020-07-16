@@ -1,7 +1,8 @@
 const express = require("express"); 
 const fs = require("fs")
-const app = express(); 
-const PORT = 3002;  
+const app = express();  
+const port = process.env.PORT || 3000
+
 
 //look in the 'html' FIRST and serve any static file 
 app.use(express.static('public'))
