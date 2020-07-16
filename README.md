@@ -5,7 +5,7 @@ Note Taker app that writes, saves and delete notes. Application uses express in 
 
 App can be view on  
 Heroku : https://note313.herokuapp.com 
-Github : 
+Github : https://sadia110.github.io/Note/
 
 ## Installation 
  NPM and the following packages, 
